@@ -1,0 +1,35 @@
+<resources>
+    <color name="red">#FF5733</color>
+    <color name="green">#33FF57</color>
+    <color name="blue">#3357FF</color>
+    <color name="pink">#FF33A1</color>
+    <color name="lime">#A1FF33</color>
+    <color name="purple">#5733FF</color>
+    <color name="orange">#FFA500</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="cyan">#00FFFF</color>
+    <color name="magenta">#FF00FF</color>
+    <color name="amber">#FFC107</color>
+    <color name="deep_orange">#FF5722</color>
+    <color name="light_green">#8BC34A</color>
+    <color name="teal">#009688</color>
+    <color name="indigo">#3F51B5</color>
+    <color name="deep_purple">#673AB7</color>
+    <color name="brown">#795548</color>
+    <color name="grey">#9E9E9E</color>
+    <color name="blue_grey">#607D8B</color>
+    <color name="light_blue">#03A9F4</color>
+    <color name="light_pink">#FFB6C1</color>
+    <color name="olive">#808000</color>
+    <color name="maroon">#800000</color>
+    <color name="navy">#000080</color>
+    <color name="button_color">#FF5722</color>
+    <color name="gold">#FFD700</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="bronze">#CD7F32</color>
+    <color name="charcoal">#36454F</color>
+    <color name="cream">#FFFDD0</color>
+    <color name="lavender">#E6E6FA</color>
+    <color name="white">#F7FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>
