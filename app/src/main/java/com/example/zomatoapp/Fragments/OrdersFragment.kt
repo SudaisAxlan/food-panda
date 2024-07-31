@@ -10,9 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.zomatoapp.Modals.RealatedtemDataModal
 import com.example.zomatoapp.R
 import com.example.zomatoapp.databinding.FragmentOrdersBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
@@ -23,6 +25,7 @@ class OrdersFragment : Fragment() {
     lateinit var Arrar:ArrayList<RealatedtemDataModal>
      var db=Firebase.firestore
     var pN="Name"
+    var Aut=Firebase.auth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +35,18 @@ class OrdersFragment : Fragment() {
         binding.oredrProgresBar.visibility=View.VISIBLE
         binding.videoProgressBar.visibility=View.VISIBLE
         val nameTy=arguments?.getString("pN").toString()
+        binding.detailItemLoginBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFram,LogingFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.detailIteminUpBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFram,SingUpFragment())
+                .addToBackStack(null)
+                .commit()
+        }
         loadData(nameTy)
         video()
         binding.plusIcon.setOnClickListener {
@@ -45,11 +60,40 @@ class OrdersFragment : Fragment() {
         }
 
         binding.orderNowtBtn.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.mainFram,OredrConformingFragment())
-                .addToBackStack(null)
-                .commit()
-        }
+            if (Aut.currentUser!=null){
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.mainFram,OredrConformingFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+            else{
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.mainFram,LogingFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+//            else{
+//                val dia=AlertDialog.Builder(requireContext())
+//                dia.setIcon(R.drawable.avt)
+//                dia.setTitle("Login")
+//                dia.setMessage("Login Your Acount")
+//                dia.setPositiveButton("yes"){a , w ->
+//                    parentFragmentManager.beginTransaction()
+//
+//                        .replace(R.id.mainFram,LogingFragment())
+//                        .addToBackStack(null)
+//                        .commit()
+//                }
+//                dia.setNegativeButton("No"){a,h->
+//                }
+//                dia.setNeutralButton("No"){a,h->
+//
+//                }
+
+
+//                }
+            }
+
 
         return binding.root
     }
@@ -142,5 +186,14 @@ class OrdersFragment : Fragment() {
 
 
     }
+    override fun onStart() {
+        super.onStart()
+        if (Aut.currentUser!=null){
+            binding.detailItemLoginBtn.visibility=View.GONE
+            binding.detailIteminUpBtn.visibility=View.GONE
+        }
+
+    }
+
 
 }

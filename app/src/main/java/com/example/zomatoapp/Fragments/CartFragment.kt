@@ -25,7 +25,6 @@ class CartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding=FragmentCartBinding.inflate(layoutInflater,container,false)
         binding.cartProgressBar.visibility=View.VISIBLE
         Array= arrayListOf()

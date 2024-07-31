@@ -9,11 +9,15 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.zomatoapp.R
 import com.example.zomatoapp.databinding.FragmentOredrConformingBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class OredrConformingFragment : Fragment() {
     var db=Firebase.firestore
+    var Aut=Firebase.auth
+    val currentUserUid = Aut.currentUser?.uid
+
     lateinit var binding: FragmentOredrConformingBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +27,18 @@ class OredrConformingFragment : Fragment() {
         val pymentMethod= arrayOf("payment Method","Easypasa","Jazzcash","Bank Card","Cash On Delery")
         val spId=binding.mySpinner
         val arrAdp=ArrayAdapter(requireContext(),android.R.layout.simple_spinner_dropdown_item,pymentMethod)
+        binding.orderConformLoginBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFram,LogingFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.orderConformSinUpBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFram,SingUpFragment())
+                .addToBackStack(null)
+                .commit()
+        }
         binding.confirmOrderBtn.setOnClickListener {
             binding.spinner.visibility=View.VISIBLE
             conformFun()
@@ -41,7 +57,8 @@ class OredrConformingFragment : Fragment() {
             "Address" to addre,
             "Phone" to phone,
             "Notes" to notes,
-            "PaymentMethod" to paymentMeth
+            "PaymentMethod" to paymentMeth,
+            "uid" to currentUserUid
         )
         if (name.isNotEmpty() && addre.isNotEmpty()&&phone.isNotEmpty()){
             db.collection("Customer Order")
@@ -71,7 +88,8 @@ class OredrConformingFragment : Fragment() {
         val map= hashMapOf(
             "Title" to "Your Order",
             "Message" to "$name : Your Order is confirmed  " ,
-            "Timestamp" to System.currentTimeMillis()
+            "Timestamp" to System.currentTimeMillis(),
+            "uid" to currentUserUid
         )
         db.collection("Notifaction")
             .add(map)
@@ -85,6 +103,14 @@ class OredrConformingFragment : Fragment() {
     }
 
 
+    override fun onStart() {
+        super.onStart()
+        if (Aut.currentUser!=null){
+            binding.orderConformLoginBtn.visibility=View.GONE
+            binding.orderConformSinUpBtn.visibility=View.GONE
+        }
+
+    }
 
 
 }

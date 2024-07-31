@@ -12,6 +12,7 @@ import com.example.zomatoapp.Adapter.RealatedItemAdapter
 import com.example.zomatoapp.Modals.RealatedtemDataModal
 import com.example.zomatoapp.R
 import com.example.zomatoapp.databinding.FragmentRealatedBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -21,6 +22,7 @@ class RealatedFragment : Fragment(),RealatedItemAdapter.onClickedListener {
     var db=Firebase.firestore
     lateinit var type:String
     lateinit var RV:RecyclerView
+    var Aut=Firebase.auth
     lateinit var binding: FragmentRealatedBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +32,18 @@ class RealatedFragment : Fragment(),RealatedItemAdapter.onClickedListener {
         binding.relatedProgreesBar.visibility=View.VISIBLE
         Array= arrayListOf()
         RV=binding.realatedItemRV
-//        getData()
+        binding.realatedLoginBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFram,LogingFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.reaatedSinUpBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFram,SingUpFragment())
+                .addToBackStack(null)
+                .commit()
+        }
         type=arguments?.getString("pTy").toString()
 
         if (type!=null){
@@ -98,11 +111,13 @@ class RealatedFragment : Fragment(),RealatedItemAdapter.onClickedListener {
             .addToBackStack(null)
             .commit()
     }
+    override fun onStart() {
+        super.onStart()
+        if (Aut.currentUser!=null){
+            binding.realatedLoginBtn.visibility=View.GONE
+            binding.reaatedSinUpBtn.visibility=View.GONE
+        }
 
-//    private fun setAdap() {
-//        RV=binding.realatedItemRV
-//        RV.layoutManager=LinearLayoutManager(requireContext())
-//        RV.adapter=RealatedItemAdapter(Array)
-//    }
+    }
 
 }

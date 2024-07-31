@@ -13,6 +13,7 @@ import com.example.zomatoapp.Adapter.MainAdapter
 import com.example.zomatoapp.Modals.MainDataModal
 import com.example.zomatoapp.R
 import com.example.zomatoapp.databinding.FragmentDashboardBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -21,6 +22,7 @@ class DashboardFragment : Fragment() ,MainAdapter.onClicked{
     lateinit var Array:ArrayList<MainDataModal>
     lateinit var binding: FragmentDashboardBinding
     var db= Firebase.firestore
+    var Aut=Firebase.auth
 
 
     override fun onCreateView(
@@ -30,18 +32,21 @@ class DashboardFragment : Fragment() ,MainAdapter.onClicked{
         binding= FragmentDashboardBinding.inflate(layoutInflater,container,false)
         loadData()
         binding.homeProgress.visibility=View.VISIBLE
-        Array = arrayListOf()
-
+        binding.dashBoardLoginBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFram,LogingFragment())
+                .addToBackStack(null)
+                .commit()
+        }
         binding.dashBoardSngUpBtn.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.mainFram,SingUpFragment())
                 .addToBackStack(null)
                 .commit()
         }
-
+        Array = arrayListOf()
         return binding.root
     }
-
     private fun loadData() {
         db.collection("MainCollection").get().addOnSuccessListener {
 
@@ -51,14 +56,12 @@ class DashboardFragment : Fragment() ,MainAdapter.onClicked{
                 Array.add(MainDataModal(image,type))
             }
             binding.homeProgress.visibility=View.GONE
-
             loaded()
         }
             .addOnFailureListener {
                 Toast.makeText(requireContext(),"Data Not Loaded", Toast.LENGTH_LONG).show()
             }
     }
-
     private fun loaded() {
         RV=binding.mainRV
         RV.layoutManager= GridLayoutManager(requireContext(),2)
@@ -77,5 +80,15 @@ class DashboardFragment : Fragment() ,MainAdapter.onClicked{
             .addToBackStack(null)
             .commit()
     }
+
+    override fun onStart() {
+        super.onStart()
+        if (Aut.currentUser!=null){
+            binding.dashBoardLoginBtn.visibility=View.GONE
+            binding.dashBoardSngUpBtn.visibility=View.GONE
+        }
+
+    }
+
 
 }

@@ -12,6 +12,7 @@ import com.example.zomatoapp.Adapter.NotifationAdapter
 import com.example.zomatoapp.Modals.NotDataModal
 import com.example.zomatoapp.R
 import com.example.zomatoapp.databinding.FragmentNotfactonBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -19,17 +20,29 @@ class NotfactonFragment : Fragment() {
      var db=Firebase.firestore
     lateinit var RV:RecyclerView
     lateinit var Array:ArrayList<NotDataModal>
+    var Aut=Firebase.auth
     lateinit var binding: FragmentNotfactonBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding=FragmentNotfactonBinding.inflate(layoutInflater,container,false)
+        binding.notificationLoginBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFram,LogingFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.notificationSngUpBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFram,SingUpFragment())
+                .addToBackStack(null)
+                .commit()
+        }
         Array = arrayListOf()
         loadaNoti()
         return binding.root
     }
-
     private fun loadaNoti() {
         db.collection("Notifaction").get()
             .addOnSuccessListener {
@@ -45,6 +58,15 @@ class NotfactonFragment : Fragment() {
             .addOnFailureListener {
                 Toast.makeText(requireContext(),"Noti Not loaded",Toast.LENGTH_LONG).show()
             }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (Aut.currentUser!=null){
+            binding.notificationLoginBtn.visibility=View.GONE
+            binding.notificationSngUpBtn.visibility=View.GONE
+        }
 
     }
 

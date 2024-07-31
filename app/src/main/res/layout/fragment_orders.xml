@@ -41,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:padding="6dp"
+                android:background="@drawable/border"
 
                 android:text="SingUp"
                 android:textColor="@color/black"
