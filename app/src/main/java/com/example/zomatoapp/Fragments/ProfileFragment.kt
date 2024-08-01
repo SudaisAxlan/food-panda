@@ -45,7 +45,6 @@ class ProfileFragment : Fragment() {
         }
         return binding.root
     }
-
     private fun userInfoData() {
       if (Aut.currentUser!=null){
           val uid=Aut.currentUser?.uid
@@ -65,19 +64,20 @@ class ProfileFragment : Fragment() {
         val uid=user?.uid
         val storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference.child("UserImage/UserProfilemage$uid")
-
-        storageRef.downloadUrl
-            .addOnSuccessListener { uri ->
-                imageUrl = uri
-                Picasso.get()
-                    .load(imageUrl)
-                    .placeholder(R.drawable.pl)
-                    .error(R.drawable.er)
-                    .into(binding.userProfileImage)
-            }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "No image found", Toast.LENGTH_LONG).show()
-            }
+        if (Aut.currentUser!=null){
+            storageRef.downloadUrl
+                .addOnSuccessListener { uri ->
+                    imageUrl = uri
+                    Picasso.get()
+                        .load(imageUrl)
+                        .placeholder(R.drawable.pl)
+                        .error(R.drawable.er)
+                        .into(binding.userProfileImage)
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "No image found", Toast.LENGTH_LONG).show()
+                }
+        }
     }
 
     private fun sngOut() {

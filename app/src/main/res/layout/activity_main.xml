@@ -10,8 +10,6 @@
     tools:ignore="MissingClass">
 
 
-
-
     <FrameLayout
         android:id="@+id/mainFram"
         android:layout_width="match_parent"
@@ -24,6 +22,7 @@
         app:iconSize="20sp"
         app:textSize="11dp"
         app:backgroundColor="#7181CE"
-        app:menu="@menu/bottom_menu"/>
+    app:menu="@menu/bottom_menu"/>
+
 
 </LinearLayout>

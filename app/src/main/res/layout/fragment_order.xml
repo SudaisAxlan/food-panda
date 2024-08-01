@@ -16,7 +16,7 @@
         app:titleTextColor="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Order"
+        app:title="Orders"
         >
 
         <LinearLayout
@@ -30,6 +30,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:text="Login"
+                android:background="@drawable/border"
+                android:layout_marginRight="4dp"
                 android:padding="6dp"
                 android:textColor="@color/red"
                 android:textSize="16sp"
@@ -48,6 +50,18 @@
                 />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/oredrPB"
+        android:visibility="gone"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/realated_row"
+        android:id="@+id/orderRV"
+        />
 
 
 

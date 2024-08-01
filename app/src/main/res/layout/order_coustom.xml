@@ -29,6 +29,8 @@
                 android:gravity="end"
                 android:text="Login"
                 android:padding="6dp"
+                android:background="@drawable/border"
+                android:layout_marginRight="4dp"
                 android:textColor="@color/red"
                 android:textSize="16sp"
                 />
@@ -97,7 +99,6 @@
             android:layout_height="30sp"
             android:src="@drawable/pluss"
      android:layout_margin="10sp"
-
             />
     </LinearLayout>
     <LinearLayout

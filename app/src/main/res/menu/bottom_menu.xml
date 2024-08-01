@@ -4,6 +4,7 @@
     <item
         android:id="@+id/bottom_dashboard"
         android:title="Home"
+
         android:icon="@drawable/home"
         />
 
@@ -11,10 +12,8 @@
         android:id="@+id/bottom_notifaction"
         android:title="Notification"
         android:icon="@drawable/noti"/>
-
     <item
         android:id="@+id/bottom_oredr"
-
         android:title="Order"
         android:icon="@drawable/order"/>
 

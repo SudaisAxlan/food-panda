@@ -1,5 +1,6 @@
 package com.example.zomatoapp.Fragments
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,8 +17,9 @@ import com.google.firebase.ktx.Firebase
 class OredrConformingFragment : Fragment() {
     var db=Firebase.firestore
     var Aut=Firebase.auth
+    lateinit var Array:ArrayList<RealatedFragment>
     val currentUserUid = Aut.currentUser?.uid
-
+    lateinit var progressDialog:ProgressDialog
     lateinit var binding: FragmentOredrConformingBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +42,10 @@ class OredrConformingFragment : Fragment() {
                 .commit()
         }
         binding.confirmOrderBtn.setOnClickListener {
+            progressDialog = ProgressDialog(requireContext())
+            progressDialog.setMessage("Please Wait...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
             binding.spinner.visibility=View.VISIBLE
             conformFun()
         }
@@ -65,8 +71,10 @@ class OredrConformingFragment : Fragment() {
                 .document()
                 .set(map)
                 .addOnSuccessListener {
-                    binding.spinner.visibility=View.GONE
+                    progressDialog.dismiss()
                     addNotifaction(name)
+                    orders()
+
                     Toast.makeText(requireContext(),"Order Added SuccessFully",Toast.LENGTH_LONG).show()
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.mainFram,OrderConformedFragment())
@@ -74,14 +82,19 @@ class OredrConformingFragment : Fragment() {
                         .commit()
                 }
                 .addOnFailureListener {
+                    progressDialog.dismiss()
                     Toast.makeText(requireContext(),"Order Not Added SuccessFully",Toast.LENGTH_LONG).show()
-
                 }
 
         }
         else{
+            progressDialog.dismiss()
             Toast.makeText(requireContext(),"Something Missng",Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun orders() {
+
     }
 
     private fun addNotifaction(name:String) {
@@ -101,7 +114,6 @@ class OredrConformingFragment : Fragment() {
 
             }
     }
-
 
     override fun onStart() {
         super.onStart()

@@ -19,9 +19,10 @@ import com.google.firebase.ktx.Firebase
 
 class RealatedFragment : Fragment(),RealatedItemAdapter.onClickedListener {
     lateinit var Array:ArrayList<RealatedtemDataModal>
+    lateinit var RV:RecyclerView
+
     var db=Firebase.firestore
     lateinit var type:String
-    lateinit var RV:RecyclerView
     var Aut=Firebase.auth
     lateinit var binding: FragmentRealatedBinding
     override fun onCreateView(

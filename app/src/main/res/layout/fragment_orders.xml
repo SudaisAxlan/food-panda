@@ -33,6 +33,8 @@
                 android:padding="6dp"
                 android:textColor="@color/red"
                 android:textSize="17sp"
+                android:background="@drawable/border"
+                android:layout_marginRight="4dp"
                 />
             <TextView
                 android:id="@+id/detailIteminUpBtn"

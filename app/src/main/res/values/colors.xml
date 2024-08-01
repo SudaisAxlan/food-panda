@@ -30,6 +30,9 @@
     <color name="charcoal">#36454F</color>
     <color name="cream">#FFFDD0</color>
     <color name="lavender">#E6E6FA</color>
-    <color name="white">#F7FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="primaryColor">#7181CE</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#B0B0B0</color>
+
 </resources>
